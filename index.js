@@ -1,59 +1,29 @@
-var Watcher       = require('./lib/watcher.js'),
-    util          = require('util'),
-    events        = require('events'),
-    fs            = require('fs'),
-    AWS           = require('aws-sdk'),
-    Notification  = require('node-notifier'),
-    path          = require('path'),
-    child_process = require('child_process');
+var fs     = require('fs');
+var events = require('events');
+var util   = require('util');
+
+var Watcher         = require('./lib/watcher.js');
+var Uploader        = require('./lib/uploader.js');
+var ClipboardCopier = require('./lib/clipboard_copier.js');
+var Notifier        = require('./lib/notifier.js');
 
 var config = require('./config.json');
 
-AWS.config.region = config.aws.region;
-AWS.config.accessKeyId = config.aws.accessKeyId;
-AWS.config.secretAccessKey = config.aws.secretAccessKey;
-var s3 = new AWS.S3({params: {Bucket: config.aws.s3.bucket}});
-
 util.inherits(Watcher, events.EventEmitter);
 
-var watcher = new Watcher(config);
+var uploader        = new Uploader(config.aws);
+var clipboardCopier = new ClipboardCopier();
+var notifier        = new Notifier();
+var watcher         = new Watcher(config);
 
-watcher.on('process', function(file_info) {
-  console.log('Uploading ' + file_info.path);
+watcher.on('upload', function (file_object) {
+  uploader.upload(file_object, function (err, file_object) {
+    if (err) return notifier.notify_upload_failure(file_object);
 
-  fs.readFile(file_info.path, function (err, data) {
-    if (err) { throw err; }
+    clipboardCopier.copy(file_object.url, function (err) {
+      if (err) return notifier.notify_upload_success(file_object);
 
-    s3.putObject({Key: config.aws.s3.keyPrefix + file_info.name, Body: data}, function(err) {
-      var notifier = new Notification();
-
-      if (err) {
-        return notifier.notify({
-          appIcon: path.resolve(__dirname, './assets/icon-red.png'),
-          title: "Upload Failed",
-          message: file_info.name
-        });
-      }
-
-      var file_url = 'https://' + escape('s3.amazonaws.com/' + config.aws.s3.bucket + '/' + config.aws.s3.keyPrefix + file_info.name);
-
-      child_process.exec('echo "' + file_url + '" | pbcopy', function (err) {
-        var notification_params = {
-          title: "Uploaded",
-          contentImage: escape(file_info.path),
-          message: file_info.name,
-          open: file_url,
-          appIcon: path.resolve(__dirname, './assets/icon-yellow.png')
-
-        }
-
-        if (!err) {
-          notification_params['title'] = 'Uploaded & Copied'
-          notification_params['appIcon'] = path.resolve(__dirname, './assets/icon-green.png')
-        }
-
-        notifier.notify(notification_params);
-      });
+      notifier.notify_upload_and_copy_success(file_object);
     });
   });
 });
