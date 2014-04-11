@@ -7,6 +7,7 @@ A poor man's CloudApp, built with Node
 - It watches a directory of your choice, for new files matching your defined criteria. (In my case it watches my Desktop for new screen shot pngs.)
 - When a new file is detected, Kurtz Kloud saves the file to a bucket of your choice in S3, copies the file's S3 URL to your clipboard, and displays a notification.
 
+![Terminal output](https://s3.amazonaws.com/kurtzkloud.com/p/kurtz-kloud-terminal.png)
 ![Native notification](https://s3.amazonaws.com/kurtzkloud.com/p/kurtz-kloud-notification.jpg)
 
 ## Requirements
