@@ -1,8 +1,7 @@
 {
   "name": "kurtz-kloud",
-  "version": "0.0.1",
-  "description": "An S3 screen shot uploader",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Poor man's CloudApp. Upload to your own S3 bucket.",
   "repository": {
     "type": "git",
     "url": "git@github.com:ltk/kurtz-kloud.git"
