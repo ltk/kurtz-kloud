@@ -49,5 +49,5 @@ If you want your images to be publicly accessible (if you want to share them wit
 ## Run
 ```
 cd kurtz-kloud
-node .
+npm start
 ```
