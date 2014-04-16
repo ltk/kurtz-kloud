@@ -22,7 +22,6 @@ npm install
 
 ## Configure
 ```
-cd kurtz-kloud
 cp config.json.example config.json
 ```
 
