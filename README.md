@@ -17,7 +17,7 @@ A poor man's CloudApp, built with Node
 ```
 git clone git@github.com:ltk/kurtz-kloud.git
 cd kurtz-kloud
-npm install node-notifier
+npm install
 ```
 
 ## Configure
