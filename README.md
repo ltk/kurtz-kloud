@@ -28,6 +28,25 @@ cp config.json.example config.json
 
 Edit `config.json` to suit your needs. Your S3 bucket must already exist. Kurtz Kloud will not create a bucket if the configured bucket is not found.
 
+If you want your images to be publicly accessible (if you want to share them with other people) you may need to add a bucket policy to your S3 bucket similar to the one below that makes the getObject action across the entire bucket accessible to everyone:
+
+```
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "AddPerm",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "*"
+			},
+			"Action": "s3:GetObject",
+			"Resource": "arn:aws:s3:::YOUR_BUCKET_NAME_HERE/*"
+		}
+	]
+}
+```
+
 ## Run
 ```
 cd kurtz-kloud
