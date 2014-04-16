@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "~2.0.0-rc13",
-    "node-notifier": "git+ssh://git@github.com:ltk/node-notifier.git#e669a673d9af4d709a568ee67a94464d8e8a4231"
+    "node-notifier": "git+ssh://git@github.com:ltk/node-notifier.git#e669a673d9af4d709a568ee67a94464d8e8a4231",
+    "mime": "~1.2.0"
   },
   "readmeFilename": "README.md",
   "bugs": {
