@@ -1,6 +1,6 @@
 # Kloud
 
-A poor man's CloudApp, built with Node
+Super simple screenshot sharing using your own S3 bucket, built with Node.js
 
 ### It goes like this
 - You start Kloud.
