@@ -4,6 +4,7 @@
     "startsWith": "Screen Shot",
     "endsWith": ".png"
   },
+  "deleteAfterUpload": false,
   "aws": {
     "region": "YOUR_AWS_REGION",
     "accessKeyId": "YOUR_AWS_ACCESS_KEY_ID",
